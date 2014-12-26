@@ -6,6 +6,8 @@ rdocker
 rdocker <remote> <command>
 ```
 
+RDocker use local docker client. Local available commands may not be the same as remote command if remote version is lower than local version. Behavior may be also different accordian to differents version.
+
 # Installation
 
 clone project : 
