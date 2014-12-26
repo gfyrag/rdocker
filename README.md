@@ -31,12 +31,12 @@ Remote file example :
 
 ```
 Remote secured.remote
-	Port 2376
-	TLS yes
-	TLSVerify yes
-	TLSCACert <CA_CERT_FILE_PATH>
-	TLSCert <CERT_FILE_PATH>
-	TLSKey <KEY_FILE_PATH>
+	Port 2376 # Configure remote port
+	TLS yes # Enable --tls option
+	TLSVerify yes # Enable --tlsverify option
+	TLSCACert <CA_CERT_FILE_PATH> # Add --tlscacert option
+	TLSCert <CERT_FILE_PATH> # Add --tlscert option
+	TLSKey <KEY_FILE_PATH> # Add --tlskey option
 	
 Remote container1.secured.remote
 	Port 2376
@@ -45,14 +45,14 @@ Remote container1.secured.remote
 	TLSCACert <CA_CERT_FILE_PATH>
 	TLSCert <CERT_FILE_PATH>
 	TLSKey <KEY_FILE_PATH>
-	DefaultCommand "exec -t -i container1 bash"
+	DefaultCommand "exec -t -i container1 bash" # Add a command to this remote, will be automatically called if not specified on the command line
 
 Remote unsecured.remote
 	Port 2375
 
 Remote bash.unsecured.remote
 	DefaultCommand run -t -i ubuntu bash
-	Host unsecured.remote
+	Host unsecured.remote # Specify an alternative hostname
 ```
 
 Usage example : 
