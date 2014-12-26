@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Source vars and functions
+source $(dirname ${BASH_SOURCE[@]})/../libs/vars
+source $(dirname ${BASH_SOURCE[@]})/../libs/fns
+
+# Extract variables
+REMOTE=$1
+shift
+COMMAND="$@"
+
+# Read some config var
+PORT=$(getRemoteOption $REMOTE "Port")
+HOST=$(getRemoteOption $REMOTE "Host")
+DEFAULT_COMMAND=$(getRemoteOption $REMOTE "DefaultCommand")
+TLS=$(getRemoteOption $REMOTE "TLS")
+TLS_CA_CERT=$(getRemoteOption $REMOTE "TLSCACert")
+TLS_CERT=$(getRemoteOption $REMOTE "TLSCert")
+TLS_KEY=$(getRemoteOption $REMOTE "TLSKey")
+TLS_VERIFY=$(getRemoteOption $REMOTE "TLSVerify")
+
+# Check port is defined
+if [[ "$PORT" == "" ]]; then
+	PORT=2375 # Defaut port
+fi;
+
+# Check if host is defined
+if [[ "$HOST" == "" ]]; then
+	HOST=$REMOTE # Default to remote
+fi;
+
+# Find correct command
+if [[ "$COMMAND" == "" ]]; then
+	COMMAND=$DEFAULT_COMMAND
+	if [[ "$COMMAND" == "" ]]; then
+		COMMAND="version"
+	fi;
+fi;
+
+# Construct docker command
+DOCKER_COMMAND=""
+if [[ "$RDOCKER_USESUDO" == "yes" ]]; then
+	DOCKER_COMMAND="sudo"
+fi;
+DOCKER_COMMAND="$DOCKER_COMMAND docker"
+DOCKER_COMMAND="$DOCKER_COMMAND -H $HOST:$PORT"
+
+if [[ "$TLS" == "yes" ]]; then
+
+	DOCKER_COMMAND="$DOCKER_COMMAND --tls"
+
+	if [[ "$TLS_CA_CERT" != "" ]]; then 
+		DOCKER_COMMAND="$DOCKER_COMMAND --tlscacert=$TLS_CA_CERT"
+	fi
+
+	if [[ "$TLS_CERT" != "" ]]; then
+		DOCKER_COMMAND="$DOCKER_COMMAND --tlscert=$TLS_CERT"
+	fi
+
+	if [[ "$TLS_KEY" != "" ]]; then
+		DOCKER_COMMAND="$DOCKER_COMMAND  --tlskey=$TLS_KEY"
+	fi
+
+	if [[ "$TLS_VERIFY" == "yes" ]]; then
+		DOCKER_COMMAND="$DOCKER_COMMAND --tlsverify"
+	fi
+fi;
+
+DOCKER_COMMAND="$DOCKER_COMMAND $COMMAND"
+
+exec $DOCKER_COMMAND

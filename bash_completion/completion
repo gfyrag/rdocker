@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Auto complete
+_rdocker()
+{
+	# Include utils
+	source $(dirname ${BASH_SOURCE[0]})/../libs/fns
+
+	# Include some vars
+	source $(dirname ${BASH_SOURCE[0]})/../libs/vars
+
+	local CURSOR=${COMP_WORDS[COMP_CWORD]}
+
+	if [[ $COMP_CWORD = 1 ]] # Select remote
+	then
+		# Complete service
+		COMPREPLY=( $(compgen -W "$(getRemotes)" -- $CURSOR) )
+	elif [[ $COMP_CWORD > 1 ]]
+	then
+
+		# Get docker autocomplete function
+		complete -p docker > /dev/null 2>&1
+		if [[ "$?" = "0" ]]; then # Auto completion define for docker CLI
+			local DOCKER_COMPLETE_FN=$(complete -p docker | xargs getopt -q -u "F:" | cut -d ' ' -f 3)
+			
+			# TODO : Include TLS binding, not necessary in current version. A future version may include completion for remote host.
+
+			COMP_WORDS=( "docker" "-H" "${COMP_WORDS[1]}:$(getRemoteOption ${COMP_WORDS[1]} "Port")" ${COMP_WORDS[@]:2} )				
+			COMP_LINE="${COMP_WORDS[*]}"
+			COMP_POINT=${#COMP_LINE}
+			COMP_CWORD=$(echo ${COMP_WORDS[@]} | tr ' ' '\n' | wc -l)
+
+			# Current cursor not included in COMP_CWORD variable
+			if [[ "$CURSOR" != "" ]]; then
+				let COMP_CWORD-=1
+			fi;
+
+			"$DOCKER_COMPLETE_FN"
+		else 
+			echo "Docker completion not installed"
+		fi
+	fi;
+}
+
+complete -F _rdocker rdocker
+
+

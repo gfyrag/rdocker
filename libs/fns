@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Include some vars
+source $(dirname ${BASH_SOURCE[0]})/vars
+
+# Function to get remote option
+function getRemoteOption() {
+	if [[ -e $RDOCKER_REMOTES ]]; then
+		sed -n "/Remote $1/{:a;n;/Remote/b;p;ba}" $RDOCKER_REMOTES | grep -e "$2[[:space:]]" | sed -re "s/.*$2[ |\t]*(.*)/\1/"
+	fi;
+}
+
+function getRemotes() {
+	if [[ -e $RDOCKER_REMOTES ]]; then
+		cat $RDOCKER_REMOTES | grep "Remote" | sed -re "s/.*Remote[ |\t](.*)/\1/"
+	fi;
+}

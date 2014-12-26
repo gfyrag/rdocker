@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Define some vars
+export RDOCKER_HOME=${RDOCKER_HOME:-$HOME/.rdocker}
+export RDOCKER_REMOTES=${RDOCKER_REMOTES:-$RDOCKER_HOME/remotes}
+export RDOCKER_USESUDO=${RDOCKER_USESUDO:-"yes"}
