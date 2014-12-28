@@ -25,7 +25,7 @@ _rdocker()
 			
 			# TODO : Include TLS binding, not necessary in current version. A future version may include completion for remote host.
 
-			COMP_WORDS=( "docker" "-H" "${COMP_WORDS[1]}:$(getRemoteOption ${COMP_WORDS[1]} "Port")" ${COMP_WORDS[@]:2} )				
+			COMP_WORDS=( "docker" "-H" "${COMP_WORDS[1]}:$(getRemoteOption ${COMP_WORDS[1]} $RDOCKER_PORT_LB)" ${COMP_WORDS[@]:2} )				
 			COMP_LINE="${COMP_WORDS[*]}"
 			COMP_POINT=${#COMP_LINE}
 			COMP_CWORD=$(echo ${COMP_WORDS[@]} | tr ' ' '\n' | wc -l)

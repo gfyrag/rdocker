@@ -10,14 +10,14 @@ shift
 COMMAND="$@"
 
 # Read some config var
-PORT=$(getRemoteOption $REMOTE "Port")
-HOST=$(getRemoteOption $REMOTE "Host")
-DEFAULT_COMMAND=$(getRemoteOption $REMOTE "DefaultCommand")
-TLS=$(getRemoteOption $REMOTE "TLS")
-TLS_CA_CERT=$(getRemoteOption $REMOTE "TLSCACert")
-TLS_CERT=$(getRemoteOption $REMOTE "TLSCert")
-TLS_KEY=$(getRemoteOption $REMOTE "TLSKey")
-TLS_VERIFY=$(getRemoteOption $REMOTE "TLSVerify")
+PORT=$(getRemoteOption $REMOTE $RDOCKER_PORT_LB)
+HOST=$(getRemoteOption $REMOTE $RDOCKER_HOST_LB)
+DEFAULT_COMMAND=$(getRemoteOption $REMOTE $RDOCKER_DEFAULT_COMMAND_LB)
+TLS=$(getRemoteOption $REMOTE $RDOCKER_TLS_LB)
+TLS_CA_CERT=$(getRemoteOption $REMOTE $RDOCKER_TLSCACERT_LB)
+TLS_CERT=$(getRemoteOption $REMOTE $RDOCKER_TLSCERT_LB)
+TLS_KEY=$(getRemoteOption $REMOTE $RDOCKER_TLSKEY_LB)
+TLS_VERIFY=$(getRemoteOption $REMOTE $RDOCKER_TLSVERIFY_LB)
 
 # Check port is defined
 if [[ "$PORT" == "" ]]; then
