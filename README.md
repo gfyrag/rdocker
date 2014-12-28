@@ -1,6 +1,8 @@
 rdocker
 =======
 
+RDocker allow docker facility around remote api. It allow execute remote command on docker server without repeat common options.
+
 # Usage : 
 ```
 rdocker <remote> <command>
