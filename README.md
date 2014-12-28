@@ -8,7 +8,7 @@ RDocker allow docker facility around remote api. It allow execute remote command
 rdocker <remote> <command>
 ```
 
-RDocker use local docker client. Local available commands may not be the same as remote command if remote version is lower than local version. Behavior may be also different accordian to differents version.
+RDocker use local docker client. Local available commands may not be the same as remote command if remote version is lower than local version. Behavior may be also different according to differents version.
 
 # Installation
 
@@ -31,7 +31,7 @@ export PATH=$PATH:<rdocker_path>/scripts
 
 RDocker use Remote host file (inspired from ssh client behavior)
 
-Remote file example : 
+Remote file example (default is ~/.rdocker/remotes) : 
 
 ```
 Remote secured.remote
