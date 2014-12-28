@@ -74,3 +74,7 @@ rdocker secured.remote run -t -i ubuntu bash
 ```
 rdocker container1.secured.remote
 ```
+
+Evolution : 
+
+I'm not a bash killer, any PR are welcome
